@@ -1,6 +1,6 @@
-package main;
+package ru.otus.crud.controllers.resp;
 
-public class Response {
+public class HealthResponse {
     private boolean result;
 
     public boolean isResult() {
