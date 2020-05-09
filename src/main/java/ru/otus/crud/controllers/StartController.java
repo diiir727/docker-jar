@@ -21,6 +21,20 @@ public class StartController {
         return ResponseEntity.ok(res);
     }
 
+    @GetMapping(path = "/greet", produces = "application/json")
+    public ResponseEntity<?> greet() {
+        var host = System.getenv("HOST");
+        var user = System.getenv("DB_USER");
+        var pass = System.getenv("DB_PASS");
+        var db = System.getenv("DB_NAME");
+        return ResponseEntity.ok(
+                "host: " + host+
+                "user: " + user +
+                "pass: " + pass +
+                "db: " + db
+        );
+    }
+
     @GetMapping(path = "/version", produces = "application/json")
     public ResponseEntity<?> version() {
         return ResponseEntity.ok(version);
