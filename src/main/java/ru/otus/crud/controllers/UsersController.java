@@ -1,5 +1,6 @@
 package ru.otus.crud.controllers;
 
+import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ public class UsersController {
         this.usersService = usersService;
     }
 
+    @Timed(value = "get_user", percentiles = {0.5, 0.95, 0.99})
     @GetMapping(produces = "application/json")
     public UserResponse get(@RequestParam(name = "id") String id) {
         var user = this.usersService.get(id);
@@ -28,6 +30,7 @@ public class UsersController {
         return resp;
     }
 
+    @Timed(value = "create_user", percentiles = {0.5, 0.95, 0.99})
     @PostMapping
     public ResponseEntity<?> create(@RequestBody UserRequest user) {
         var cratedUser = this.usersService.add(user.getName());
@@ -35,6 +38,7 @@ public class UsersController {
                 .build();
     }
 
+    @Timed(value = "update_user", percentiles = {0.5, 0.95, 0.99})
     @PutMapping(produces = "application/json")
     public UserResponse update(@RequestBody UserRequest userRequest) {
         var user = this.usersService.update(userRequest);
@@ -44,6 +48,7 @@ public class UsersController {
         return resp;
     }
 
+    @Timed(value = "delete_user", percentiles = {0.5, 0.95, 0.99})
     @DeleteMapping(produces = "application/json")
     public ResponseEntity<?> delete(@RequestParam(name = "id") String id) {
         this.usersService.delete(id);
